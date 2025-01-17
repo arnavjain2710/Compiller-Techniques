@@ -11,8 +11,8 @@ void checkSingleLineComment(char *line) {
     }
 }
 
-// Function to check and print multi-line comments
-void checkMultiLineComment(FILE *file) {
+// Function to handle multi-line comments
+void handleMultiLineComment(FILE *file) {
     char line[MAX_LINE_LENGTH];
     int isMultiLineComment = 0;
 
@@ -21,21 +21,33 @@ void checkMultiLineComment(FILE *file) {
         char *end = strstr(line, "*/");
 
         if (isMultiLineComment) {
-            // In multi-line comment
+            // Continue printing multi-line comment lines
             printf("Multi-line comment: %s", line);
             if (end != NULL) {
-                isMultiLineComment = 0;
+                isMultiLineComment = 0;  // End of multi-line comment
             }
         } else if (start != NULL) {
             // Start of multi-line comment
             printf("Multi-line comment: %s", start);
             isMultiLineComment = 1;
             if (end != NULL) {
-                // End of comment on the same line
-                isMultiLineComment = 0;
+                isMultiLineComment = 0; // If the comment ends on the same line
             }
         }
     }
+}
+
+// Function to check if a line is a comment or not
+int isCommentLine(char *line) {
+    // Check if line contains single-line comment marker
+    if (strstr(line, "//") != NULL) {
+        return 1; // It's a comment
+    }
+    // Check if line contains multi-line comment markers
+    if (strstr(line, "/*") != NULL || strstr(line, "*/") != NULL) {
+        return 1; // It's a comment
+    }
+    return 0; // Not a comment
 }
 
 // Main function to read the file and check each line
@@ -53,15 +65,40 @@ int main(int argc, char *argv[]) {
 
     char line[MAX_LINE_LENGTH];
     int lineNumber = 0;
+    int isInsideMultiLineComment = 0;
 
     while (fgets(line, sizeof(line), file)) {
         lineNumber++;
 
-        // Check for single-line comment
-        checkSingleLineComment(line);
+        // Check if inside a multi-line comment from previous lines
+        if (isInsideMultiLineComment) {
+            printf("Multi-line comment: %s", line);
+            // Look for the ending marker of the multi-line comment
+            if (strstr(line, "*/") != NULL) {
+                isInsideMultiLineComment = 0;
+            }
+            continue;
+        }
 
-        // Check for multi-line comment (we handle this after reading the entire file)
-        checkMultiLineComment(file);
+        // Check for a multi-line comment starting within the current line
+        if (strstr(line, "/*") != NULL) {
+            printf("Multi-line comment: %s", strstr(line, "/*"));
+            isInsideMultiLineComment = 1;
+            // Check if it ends within the same line
+            if (strstr(line, "*/") != NULL) {
+                isInsideMultiLineComment = 0;
+            }
+            continue;
+        }
+
+        // Check for single-line comments
+        if (strstr(line, "//") != NULL) {
+            printf("Single-line comment: %s\n", strstr(line, "//") + 2);
+            continue;
+        }
+
+        // If the line is not a comment, output that it's not a comment
+        printf("Line %d is not a comment: %s", lineNumber, line);
     }
 
     fclose(file);
