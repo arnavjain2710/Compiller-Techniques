@@ -14,7 +14,7 @@ int isKeyword(char *word)
     {
         if (strcmp(word, keywords[i]) == 0)
         {
-            total_tokens++;  // Increment token count for keywords
+            total_tokens++;  
             return 1;
         }
     }
@@ -29,7 +29,7 @@ int isOperator(char c)
     {
         if (c == operators[i])
         {
-            total_tokens++;  // Increment token count for operators
+            total_tokens++;  
             return 1;
         }
     }
@@ -50,7 +50,7 @@ int isIdentifier(char *word)
             return 0;
         }
     }
-    total_tokens++;  // Increment token count for identifiers
+    total_tokens++;  
     return 1;
 }
 
@@ -78,7 +78,7 @@ int isNumber(char *word)
         }
     }
 
-    total_tokens++;  // Increment token count for numbers
+    total_tokens++;  
     return 1;
 }
 
@@ -183,7 +183,6 @@ void analyzeTokens(FILE *file)
         }
     }
 
-    // Print the final token count
     printf("Total token count: %d\n", total_tokens);
 }
 
