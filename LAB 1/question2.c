@@ -24,7 +24,7 @@ int isKeyword(char *word)
 // Function to check if a character is an operator
 int isOperator(char c)
 {
-    char operators[] = "+-*/%=<>();,.{}#";
+    char operators[] = "+-*/%=<>();,.{}#[]";
     for (int i = 0; operators[i] != '\0'; i++)
     {
         if (c == operators[i])
@@ -127,7 +127,7 @@ void analyzeTokens(FILE *file)
     while ((c = fgetc(file)) != EOF)
     {
         skipComments(file);  // Skip comments
-
+        char d;
         if (isalpha(c) || c == '_')  // Start of a possible identifier or keyword
         {
             word[i++] = c;
@@ -145,10 +145,10 @@ void analyzeTokens(FILE *file)
             total_tokens++;  // Increment token count for string literals
             i = 0;
         }
-        else if (isdigit(c) || (c == '-' && isdigit(fgetc(file))))  // Start of a number
+        else if (isdigit(c) || (c == '-' && ( isdigit(d = fgetc(file)))))  // Start of a number
         {
             word[i++] = c;
-            ungetc(c, file);  // Push the character back for number processing
+            ungetc(d, file);  // Push the character back for number processing
             while ((c = fgetc(file)) != EOF && (isdigit(c) || c == '.'))
             {
                 word[i++] = c;
@@ -156,7 +156,7 @@ void analyzeTokens(FILE *file)
             word[i] = '\0';  // Null-terminate the number
             if (isNumber(word))  // Check if it's a valid number
             {
-                printf("Number: %s\n", word);  // Print the number token
+                printf("Number    : %s\n", word);  // Print the number token
             }
             i = 0;  // Reset for the next token
         }

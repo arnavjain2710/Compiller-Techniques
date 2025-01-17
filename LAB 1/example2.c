@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+// this is a comment
 int main()
 {
     int x = 1;
