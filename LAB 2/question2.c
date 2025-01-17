@@ -6,7 +6,7 @@ int isKeyword(char *str)
     char *keywords[] = {
         "int", "float", "char", "if", "else", "while", "for", "return", "void", "switch",
         "case", "break", "continue", "default", "struct", "union", "typedef", "long",
-        "short", "unsigned", "signed", "enum", "const", "volatile", "goto", NULL};
+        "short", "unsigned", "signed", "enum", "const", "volatile", "goto", "NULL" , NULL};
 
     for (int i = 0; keywords[i] != NULL; i++)
     {
@@ -38,3 +38,8 @@ int main()
 
     return 0;
 }
+
+
+
+
+
