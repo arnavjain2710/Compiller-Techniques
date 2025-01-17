@@ -24,7 +24,7 @@ int isKeyword(char *word)
 // Function to check if a character is an operator
 int isOperator(char c)
 {
-    char operators[] = "+-*/%=<>();,.";
+    char operators[] = "+-*/%=<>();,.{}#";
     for (int i = 0; operators[i] != '\0'; i++)
     {
         if (c == operators[i])
@@ -128,7 +128,7 @@ void analyzeTokens(FILE *file)
     {
         skipComments(file);  // Skip comments
 
-        if (isalnum(c) || c == '_')  // Start of a possible identifier or keyword
+        if (isalpha(c) || c == '_')  // Start of a possible identifier or keyword
         {
             word[i++] = c;
         }
@@ -156,9 +156,9 @@ void analyzeTokens(FILE *file)
             word[i] = '\0';  // Null-terminate the number
             if (isNumber(word))  // Check if it's a valid number
             {
-                printf("Number: %s\n", word);
+                printf("Number: %s\n", word);  // Print the number token
             }
-            i = 0;
+            i = 0;  // Reset for the next token
         }
         else
         {

@@ -3,7 +3,8 @@
 #include <string.h>
 int main()
 {
+    int x = 1;
     char s[] = "Hello World!";
     printf("%s\n" , s);
-    return ;
+    return 0;
 }
