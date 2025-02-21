@@ -1,0 +1,15 @@
+yacc -d -b q2 q2.y     
+lex -o q2.lex.c q2.l   
+gcc q2.lex.c q2.tab.c -o q2 -no-pie -ll -lm
+
+
+./q2
+echo "a + b * (10 - 5)" | ./q2
+
+File structure:
+q2.y               # YACC grammar file
+q2.l               # LEX tokenizer file
+q2.tab.c           # Generated parser
+q2.tab.h           # Token definitions
+q2.lex.c           # Generated scanner
+q2                 # Executable

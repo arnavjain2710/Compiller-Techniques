@@ -1,0 +1,17 @@
+yacc -d -b q1 q1.y           
+lex -o q1.lex.c q1.l       
+gcc q1.lex.c q1.tab.c -o q1 -ll
+
+# Testing
+echo "your_string" | ./q1
+echo "ABBA" | ./q1
+echo "ABB" | ./q1
+
+File structure:
+q1.y               Your YACC source
+q1.l               Your LEX source
+q1.tab.c           Generated parser
+q1.tab.h           Token definitions
+q1.lex.c           Generated scanner
+q1                 Final executable
+
