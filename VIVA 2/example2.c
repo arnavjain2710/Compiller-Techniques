@@ -1,0 +1,2 @@
+printf("hello");
+scanf("hellpo");

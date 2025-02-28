@@ -38,4 +38,5 @@ int main() {
 // lex -o q1.c q1.l
 // gcc q1.c -ll -o q1
 // ./q1
+// press Crtl + D to enter the word
 
