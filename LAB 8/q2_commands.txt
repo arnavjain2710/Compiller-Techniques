@@ -1,0 +1,4 @@
+yacc -d -b q2 q2.y           
+lex -o q2.lex.c q2.l       
+gcc q2.lex.c q2.tab.c -o q2 -ll -lm
+./q2
