@@ -1,0 +1,4 @@
+lex -o q3.c q3.l
+gcc q3.c -ll -o q3
+./q3 
+
